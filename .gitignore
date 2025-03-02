@@ -1,0 +1,44 @@
+﻿# 🛑 1. Bỏ qua thư mục build và output
+bin/
+obj/
+out/
+
+# 🛑 2. Bỏ qua file của Visual Studio
+.vs/
+.vscode/
+*.suo
+*.user
+*.vcxproj.*
+*.csproj.user
+
+# 🛑 3. Bỏ qua file tạm của hệ thống
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# 🛑 4. Bỏ qua file cấu hình cá nhân
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+*.log
+logs/
+
+# 🛑 5. Bỏ qua file dependency cục bộ
+node_modules/
+wwwroot/lib/
+wwwroot/dist/
+
+# 🛑 6. Bỏ qua file của NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+
+# 🛑 7. Bỏ qua file database cục bộ
+*.mdf
+*.ldb
+*.ldf
+*.sqlite
+
+# 🛑 8. Bỏ qua file publish
+publish/
