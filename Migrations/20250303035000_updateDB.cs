@@ -11,80 +11,6 @@ namespace Exam_question_BE.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
-                name: "Username",
-                table: "Users",
-                type: "varchar(16)",
-                maxLength: 16,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "UpdatedBy",
-                table: "Users",
-                type: "nvarchar(50)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "PhoneNumber",
-                table: "Users",
-                type: "varchar(11)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "FullName",
-                table: "Users",
-                type: "nvarchar(50)",
-                maxLength: 50,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Email",
-                table: "Users",
-                type: "varchar(30)",
-                maxLength: 30,
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "CreatedBy",
-                table: "Users",
-                type: "nvarchar(50)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Code",
-                table: "Users",
-                type: "varchar(8)",
-                maxLength: 8,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(450)");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Roles",
-                type: "varchar(12)",
-                maxLength: 12,
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
             migrationBuilder.CreateTable(
                 name: "DifficultyLevels",
                 columns: table => new
@@ -95,6 +21,43 @@ namespace Exam_question_BE.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DifficultyLevels", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
+                    Name = table.Column<string>(type: "varchar(12)", maxLength: 12, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false, defaultValueSql: "NEWSEQUENTIALID()"),
+                    Code = table.Column<string>(type: "varchar(8)", maxLength: 8, nullable: false),
+                    Username = table.Column<string>(type: "varchar(16)", maxLength: 16, nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Email = table.Column<string>(type: "varchar(30)", maxLength: 30, nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Avatar = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BirthDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Gender = table.Column<int>(type: "int", nullable: false),
+                    PhoneNumber = table.Column<string>(type: "varchar(11)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(50)", nullable: true),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -118,6 +81,29 @@ namespace Exam_question_BE.Migrations
                         name: "FK_Exams_DifficultyLevels_DifficultyLevelId",
                         column: x => x.DifficultyLevelId,
                         principalTable: "DifficultyLevels",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleUser",
+                columns: table => new
+                {
+                    RolesId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleUser", x => new { x.RolesId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_RoleUser_Roles_RolesId",
+                        column: x => x.RolesId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RoleUser_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -166,14 +152,12 @@ namespace Exam_question_BE.Migrations
                         name: "FK_UserExams_Exams_ExamId",
                         column: x => x.ExamId,
                         principalTable: "Exams",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_UserExams_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -194,8 +178,7 @@ namespace Exam_question_BE.Migrations
                         name: "FK_Answers_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -216,20 +199,17 @@ namespace Exam_question_BE.Migrations
                         name: "FK_UserAnswers_Answers_AnswerId",
                         column: x => x.AnswerId,
                         principalTable: "Answers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_UserAnswers_Questions_QuestionId",
                         column: x => x.QuestionId,
                         principalTable: "Questions",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_UserAnswers_UserExams_UserExamId",
                         column: x => x.UserExamId,
                         principalTable: "UserExams",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -246,6 +226,11 @@ namespace Exam_question_BE.Migrations
                 name: "IX_Questions_ExamId",
                 table: "Questions",
                 column: "ExamId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RoleUser_UserId",
+                table: "RoleUser",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserAnswers_AnswerId",
@@ -271,13 +256,25 @@ namespace Exam_question_BE.Migrations
                 name: "IX_UserExams_UserId",
                 table: "UserExams",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Code",
+                table: "Users",
+                column: "Code",
+                unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "RoleUser");
+
+            migrationBuilder.DropTable(
                 name: "UserAnswers");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Answers");
@@ -289,82 +286,13 @@ namespace Exam_question_BE.Migrations
                 name: "Questions");
 
             migrationBuilder.DropTable(
+                name: "Users");
+
+            migrationBuilder.DropTable(
                 name: "Exams");
 
             migrationBuilder.DropTable(
                 name: "DifficultyLevels");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Username",
-                table: "Users",
-                type: "nvarchar(max)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "varchar(16)",
-                oldMaxLength: 16);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "UpdatedBy",
-                table: "Users",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "PhoneNumber",
-                table: "Users",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(11)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "FullName",
-                table: "Users",
-                type: "nvarchar(max)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldMaxLength: 50);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Email",
-                table: "Users",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "varchar(30)",
-                oldMaxLength: 30);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "CreatedBy",
-                table: "Users",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(50)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Code",
-                table: "Users",
-                type: "nvarchar(450)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "varchar(8)",
-                oldMaxLength: 8);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Name",
-                table: "Roles",
-                type: "nvarchar(max)",
-                nullable: false,
-                oldClrType: typeof(string),
-                oldType: "varchar(12)",
-                oldMaxLength: 12);
         }
     }
 }

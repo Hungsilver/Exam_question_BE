@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Exam_question_BE.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20250303033650_removeCasecade")]
-    partial class removeCasecade
+    [Migration("20250303035000_updateDB")]
+    partial class updateDB
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
