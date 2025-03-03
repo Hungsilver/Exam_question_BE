@@ -15,17 +15,21 @@ namespace Exam_question_BE.HS.Infrastructure.Data.Configurations
             builder.HasOne(ua => ua.UserExam)
                 .WithMany()
                 .HasForeignKey(ua => ua.UserExamId)
-                .IsRequired(); 
-            
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
+
             builder.HasOne(ua => ua.Answer)
                 .WithMany()
                 .HasForeignKey(ua => ua.AnswerId)
-                .IsRequired(); 
-            
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.HasOne(ua => ua.Question)
                 .WithMany()
                 .HasForeignKey(ua => ua.QuestionId)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

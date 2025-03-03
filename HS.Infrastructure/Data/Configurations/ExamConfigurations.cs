@@ -15,12 +15,14 @@ namespace Exam_question_BE.HS.Infrastructure.Data.Configurations
             builder.HasMany<Question>()
                 .WithOne(q => q.Exam)
                 .HasForeignKey(q => q.ExamId)
-                .IsRequired(false); // question maybe null
+                .IsRequired(false) // question maybe null
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(e => e.DifficultyLevel)
                 .WithMany()
                 .HasForeignKey(e => e.DifficultyLevelId)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
 
         }
     }

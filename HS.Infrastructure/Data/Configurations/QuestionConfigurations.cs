@@ -15,7 +15,8 @@ namespace Exam_question_BE.HS.Infrastructure.Data.Configurations
             builder.HasMany(q => q.Answers)
                 .WithOne(a => a.Question)
                 .HasForeignKey(a => a.QuestionId)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

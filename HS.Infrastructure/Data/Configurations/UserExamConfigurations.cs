@@ -15,12 +15,14 @@ namespace Exam_question_BE.HS.Infrastructure.Data.Configurations
             builder.HasOne(ux => ux.User)
                 .WithMany()
                 .HasForeignKey(ux => ux.UserId)
-                .IsRequired();
-            
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
+
             builder.HasOne(ux => ux.Exam)
                 .WithMany()
                 .HasForeignKey(ux => ux.ExamId)
-                .IsRequired();
+                .IsRequired()
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
