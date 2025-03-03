@@ -4,7 +4,6 @@ using Exam_question_BE.HS.Core.DTOs.Request;
 using Exam_question_BE.HS.Core.DTOs.Response;
 using Exam_question_BE.HS.Core.Helpers;
 using Exam_question_BE.HS.Core.Interfaces;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Exam_question_BE.HS.Web.Controllers
@@ -23,7 +22,7 @@ namespace Exam_question_BE.HS.Web.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<ApiResponse<PagedListApiResult<UserDTORes>>>> GetFilter(int page = 1, int pageSize=10, string search="", string sort="")
+        public async Task<ActionResult<ApiResponse<PagedListApiResult<UserDTORes>>>> GetFilter(int page = 1, int pageSize = 10, string search = "", string sort = "")
         {
             var users = await _userService.GetFilter(page, pageSize, search, sort);
             return Ok(new ApiResponse<PagedListApiResult<UserDTORes>>(
