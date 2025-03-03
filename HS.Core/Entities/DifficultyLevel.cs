@@ -3,14 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Exam_question_BE.HS.Core.Entities
 {
-    public class Role
+    public class DifficultyLevel
     {
         [Key]
         public Guid Id { get; set; }
-
         [Required]
-        [MaxLength(12)]
-        [Column(TypeName = "varchar(12)")]
-        public required string Name { get; set; }
+        [MaxLength(20)]
+        [Column(TypeName = "varchar(11)")]
+        public required string DifficultyName { get; set; }
     }
 }
