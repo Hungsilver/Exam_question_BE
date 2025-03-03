@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Exam_question_BE.HS.Web.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [ApiController]
     [Route("api/user")]
     public class UserController : ControllerBase

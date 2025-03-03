@@ -31,9 +31,12 @@ namespace Exam_question_BE.HS.Core.Entities
         public string? Avatar { get; set; }
         public DateTime? BirthDate { get; set; }
         public required int Gender { get; set; } //nu - nam - gax
+        [Column(TypeName = "varchar(11)")]
         public string? PhoneNumber { get; set; }
         public int? Status { get; set; }
+        [Column(TypeName = "nvarchar(50)")]
         public string? CreatedBy { get; set; }
+        [Column(TypeName = "nvarchar(50)")]
         public string? UpdatedBy { get; set; }
         public ICollection<Role> Roles { get; set; } = [];
     }
