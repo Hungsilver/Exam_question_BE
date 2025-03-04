@@ -11,6 +11,10 @@ namespace Exam_question_BE.HS.Core.DI
             services.AddScoped<JwtService>();
             services.AddScoped<IAuthService,AuthService>();
             services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IDifficultyLevelService,DifficultyLevelService>();
+            services.AddScoped<IExamService,ExamService>();
+            services.AddScoped<IQuestionService,QuestionService>();
+            services.AddScoped<IAnswerService,AnswerService>();
             return services;
         }
 

@@ -7,11 +7,11 @@ using System.Text.Json.Serialization;
 var builder = WebApplication.CreateBuilder(args);
 
 //tuan tu hoa. tranh truy van long 
-//builder.Services.AddMvc()
-//    .AddJsonOptions(options =>
-//    {
-//        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-//    });
+builder.Services.AddMvc()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+    });
 // Add services to the container.
 builder.Services.AddControllers(options =>
     {

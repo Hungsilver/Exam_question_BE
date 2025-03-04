@@ -1,5 +1,4 @@
 ﻿using Exam_question_BE.HS.Core.DTOs.Auth;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Exam_question_BE.HS.Core.Interfaces
 {

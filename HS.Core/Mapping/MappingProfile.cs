@@ -17,6 +17,9 @@ namespace Exam_question_BE.HS.Core.Mapping
 
             CreateMap<UserDTOReq, User>()
                 .ForMember(dest => dest.Roles, opt => opt.Ignore());
+
+            CreateMap<Question, QuestionDTORes>();
+            CreateMap<Answer, AnswerDTORes>();
         }
     }
 }

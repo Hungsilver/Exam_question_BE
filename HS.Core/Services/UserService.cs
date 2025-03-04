@@ -3,6 +3,7 @@ using AutoMapper.QueryableExtensions;
 using Exam_question_BE.HS.Core.DTOs.Request;
 using Exam_question_BE.HS.Core.DTOs.Response;
 using Exam_question_BE.HS.Core.Entities;
+using Exam_question_BE.HS.Core.Exceptions;
 using Exam_question_BE.HS.Core.Helpers;
 using Exam_question_BE.HS.Core.Interfaces;
 using Exam_question_BE.HS.Infrastructure.Data;
@@ -62,7 +63,8 @@ namespace Exam_question_BE.HS.Core.Services
         }
         public async Task<UserDTORes> Add(UserDTOReq userReq)
         {
-            var role = await _context.Roles.FirstOrDefaultAsync(r=>r.Name=="USER");
+            var role = await _context.Roles.FirstOrDefaultAsync(r => r.Name == "USER")
+                ?? throw new NotFoundException($"cannot find role User");
 
             User user = _mapper.Map<User>(userReq);
             user.Id = Guid.Empty;
